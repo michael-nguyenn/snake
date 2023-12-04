@@ -9,16 +9,25 @@ import javax.swing.*;
  **/
 public class SnakeGame
 {
+    // Constants
+    public static final int WIDTH = 600;
+    public static final int HEIGHT = 600;
+
+
     public static void main(String[] args)
     {
         // Boilerplate
         JFrame frame = new JFrame("Snake");
-        frame.setSize(700, 700);
+        frame.setSize(WIDTH, HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
 
+        GameWindow gameWindow = new GameWindow();
 
+        frame.add(gameWindow);
         frame.setVisible (true);
+
     }
 }
 
