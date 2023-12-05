@@ -57,6 +57,18 @@ public class GameWindow extends JPanel
             public void actionPerformed(ActionEvent e)
             {
                 snake.move();
+
+                Point head = snake.getHead();
+                Point foodPosition = food.getPosition();
+
+                double distance = distanceBetweenPoints(head.x, head.y, foodPosition.x, foodPosition.y);
+
+                if (distance <= 10)
+                {
+                    snake.grow();
+                    generateFoodPosition();
+                }
+
                 repaint();
             }
         });
@@ -89,5 +101,13 @@ public class GameWindow extends JPanel
             food.generateNewPosition(SnakeGame.WIDTH, SnakeGame.HEIGHT);
         }
         while (snake.getHead().equals(food.getPosition()));
+    }
+
+    private double distanceBetweenPoints(int x1, int y1, int x2, int y2)
+    {
+        // The distance between two points was used with the formula:
+            // Square Root of (x2 - x1)^2 + (y2 - y1)^2
+
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 }

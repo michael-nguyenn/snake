@@ -51,4 +51,10 @@ public class Snake
             case RIGHT  ->  { this.head.x++; }
         }
     }
+
+
+    public void grow()
+    {
+        System.out.println("It's growinggg;");
+    }
 }
