@@ -13,21 +13,25 @@ import java.awt.event.*;
 public class GameWindow extends JPanel
 {
     public static final int GAME_DELAY = 4;
-    private Snake snake;
     private Timer timer;
+    private Snake snake;
+    private Food food;
+
 
 
     public GameWindow()
     {
         this.snake = new Snake();
+        this.food = new Food(SnakeGame.WIDTH, SnakeGame.HEIGHT);
+        this.generateFoodPosition();
 
         this.setPreferredSize(new Dimension(SnakeGame.WIDTH, SnakeGame.HEIGHT));
         this.setFocusable(true);
 
-        addTimer();
+        this.addTimer();
         this.timer.start();
 
-        addListeners();
+        this.addListeners();
     }
 
 
@@ -40,6 +44,9 @@ public class GameWindow extends JPanel
         Point head = snake.getHead();
 
         g.fillRect(head.x, head.y, Snake.SEGMENT_SIZE, Snake.SEGMENT_SIZE);
+
+        Point foodPosition = food.getPosition();
+        g.fillRect(foodPosition.x, foodPosition.y, 20, 20);
     }
 
 
@@ -71,5 +78,16 @@ public class GameWindow extends JPanel
                 }
             }
         });
+    }
+
+
+    // Helper Methods
+    private void generateFoodPosition()
+    {
+        do
+        {
+            food.generateNewPosition(SnakeGame.WIDTH, SnakeGame.HEIGHT);
+        }
+        while (snake.getHead().equals(food.getPosition()));
     }
 }
