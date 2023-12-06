@@ -1,9 +1,10 @@
 // GameWindow.java
 
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Random;
+import java.util.*;
 
 
 /**
@@ -40,7 +41,6 @@ public class GameWindow extends JPanel
         super.paintComponent(g);
 
 
-
         for (Point segment : snake.getBody())
         {
             g.setColor(Color.BLACK);
@@ -64,13 +64,31 @@ public class GameWindow extends JPanel
 
                 Point head = snake.getHead();
                 Point foodPosition = food.getPosition();
+                ArrayList<Point> body = snake.getBody();
 
-                double distance = distanceBetweenPoints(head.x, head.y, foodPosition.x, foodPosition.y);
+                double foodDistance = distanceBetweenPoints(head.x, head.y, foodPosition.x, foodPosition.y);
 
-                if (distance <= 20)
+                if (foodDistance <= Snake.SEGMENT_SIZE)
                 {
                     snake.grow();
                     generateFoodPosition();
+                }
+
+                // Checking collision with walls
+                if (head.x < Snake.SEGMENT_SIZE|| head.x >= SnakeGame.WIDTH - Snake.SEGMENT_SIZE
+                        || head.y < Snake.SEGMENT_SIZE || head.y >= SnakeGame.HEIGHT - (2 * Snake.SEGMENT_SIZE))
+                {
+                    timer.stop();
+                }
+
+                // Checking collision with self
+                for (int i = 1; i < body.size(); i++)
+                {
+                    if (head.equals(body.get(i)))
+                    {
+                        timer.stop();
+                        break;
+                    }
                 }
 
                 repaint();
@@ -104,7 +122,7 @@ public class GameWindow extends JPanel
         {
             food.generateNewPosition(SnakeGame.WIDTH, SnakeGame.HEIGHT);
         }
-        while (snake.getHead().equals(food.getPosition()));
+        while (snake.getBody().contains(food.getPosition()));
     }
 
 

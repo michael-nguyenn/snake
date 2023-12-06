@@ -30,8 +30,12 @@ public class Food
 
     public void generateNewPosition(int maxWidth, int maxHeight)
     {
-        int x = random.nextInt(maxWidth);
-        int y = random.nextInt(maxHeight);
+        int min = Snake.SEGMENT_SIZE;
+        maxWidth = maxWidth - Snake.SEGMENT_SIZE;
+        maxHeight = maxHeight - (2 *Snake.SEGMENT_SIZE);
+
+        int x = random.nextInt((maxWidth - min) + 1) + min;
+        int y = random.nextInt((maxHeight - min) + 1) + min;
 
         this.position = new Point(x, y);
     }
