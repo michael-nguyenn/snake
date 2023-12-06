@@ -3,6 +3,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Random;
 
 
 /**
@@ -12,11 +13,10 @@ import java.awt.event.*;
  **/
 public class GameWindow extends JPanel
 {
-    public static final int GAME_DELAY = 4;
+    public static final int GAME_DELAY = 100;
     private Timer timer;
     private Snake snake;
     private Food food;
-
 
 
     public GameWindow()
@@ -28,7 +28,7 @@ public class GameWindow extends JPanel
         this.setPreferredSize(new Dimension(SnakeGame.WIDTH, SnakeGame.HEIGHT));
         this.setFocusable(true);
 
-        this.addTimer();
+        this.timer = addTimer();
         this.timer.start();
 
         this.addListeners();
@@ -39,20 +39,24 @@ public class GameWindow extends JPanel
     {
         super.paintComponent(g);
 
+
+
+        for (Point segment : snake.getBody())
+        {
+            g.setColor(Color.BLACK);
+            g.fillRect(segment.x, segment.y, Snake.SEGMENT_SIZE, Snake.SEGMENT_SIZE);
+        }
+
         g.setColor(Color.PINK);
-
-        Point head = snake.getHead();
-
-        g.fillRect(head.x, head.y, Snake.SEGMENT_SIZE, Snake.SEGMENT_SIZE);
 
         Point foodPosition = food.getPosition();
         g.fillRect(foodPosition.x, foodPosition.y, 20, 20);
     }
 
 
-    private void addTimer()
+    private Timer addTimer()
     {
-        this.timer = new Timer(GAME_DELAY, new ActionListener()
+        return new Timer(GAME_DELAY, new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
@@ -63,7 +67,7 @@ public class GameWindow extends JPanel
 
                 double distance = distanceBetweenPoints(head.x, head.y, foodPosition.x, foodPosition.y);
 
-                if (distance <= 10)
+                if (distance <= 20)
                 {
                     snake.grow();
                     generateFoodPosition();
@@ -102,6 +106,7 @@ public class GameWindow extends JPanel
         }
         while (snake.getHead().equals(food.getPosition()));
     }
+
 
     private double distanceBetweenPoints(int x1, int y1, int x2, int y2)
     {
