@@ -19,12 +19,17 @@ public class GameWindow extends JPanel
     private Snake snake;
     private Food food;
 
+    private ScoreBoard scoreBoard;
+    private int score;
 
-    public GameWindow()
+
+    public GameWindow(ScoreBoard scoreBoard)
     {
         this.snake = new Snake();
         this.food = new Food(SnakeGame.WIDTH, SnakeGame.HEIGHT);
         this.generateFoodPosition();
+        this.scoreBoard = scoreBoard;
+        this.score = scoreBoard.getScore();
 
         this.setPreferredSize(new Dimension(SnakeGame.WIDTH, SnakeGame.HEIGHT));
         this.setFocusable(true);
@@ -72,6 +77,10 @@ public class GameWindow extends JPanel
                 {
                     snake.grow();
                     generateFoodPosition();
+                    score++;
+                    scoreBoard.setScore(score);
+
+                    System.out.println("Food is at: " + foodPosition.x + ", " + foodPosition.y);
                 }
 
                 // Checking collision with walls

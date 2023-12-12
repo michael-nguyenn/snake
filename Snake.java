@@ -15,8 +15,8 @@ public class Snake
     public static final int SEGMENT_SIZE = 20;
     public enum Direction { UP, DOWN, LEFT, RIGHT };
     private Direction direction;
-    private Point head;
-    private ArrayList<Point> body;
+    private final Point head;
+    private final ArrayList<Point> body;
     private Point newTail;  // Stores the position of where the last segment of the snake's body was
 
 

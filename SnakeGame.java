@@ -1,6 +1,7 @@
 // SnakeGame.java
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  *
@@ -21,15 +22,15 @@ public class SnakeGame
         frame.setSize(WIDTH, HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
+        frame.setResizable(true);
 
-        GameWindow gameWindow = new GameWindow();
+        ScoreBoard scoreBoard = new ScoreBoard();
+        GameWindow gameWindow = new GameWindow(scoreBoard);
 
-        frame.add(gameWindow);
+
+        frame.add(gameWindow, BorderLayout.CENTER);
+        frame.add(scoreBoard, BorderLayout.NORTH);
         frame.setVisible (true);
 
     }
 }
-
-// main instantiates an instance of a class that extends JFrame and the actual work begins in that instance's constructor.
-// main create a JFrame object and the actual work begins with main operating on that object.
